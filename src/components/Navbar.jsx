@@ -1,9 +1,7 @@
-import './navbar.css';
-
 
 const Navbar = () => {
     return (
-        <div className="navbar">
+        <>
             <nav>
                 <p>Pizzería Mamma Mia!</p>
                 <ul>
@@ -13,7 +11,7 @@ const Navbar = () => {
                     <li className='carrito'><a href="#">🛒</a></li>
                 </ul>
             </nav>
-        </div>
+        </>
     )
 }
 
