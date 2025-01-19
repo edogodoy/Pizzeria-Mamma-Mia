@@ -6,7 +6,9 @@
   flex-direction: column;
   flex: 1;
 }
-
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
 
 /*************************************************************** header y footer */
 header {
@@ -15,12 +17,12 @@ header {
   background-size: cover;
   background-position: center;
   height: 600px;
-
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
+  
 }
 .espacio {
   flex: 1;
@@ -31,6 +33,7 @@ footer {
   text-align: center;
   padding: 20px;
 }
+/*************************************************************** header y footer */
 
 
 /*************************************************************** navbar */
@@ -39,17 +42,17 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-
+  
   p {
-      font-size: 24px;
+    font-size: 24px;
   }
 }
 a {
   color: white;
   font-size: 18px;
-
+  
   &:hover {
-      color: rgb(253, 255, 138);
+    color: rgb(253, 255, 138);
   }
 }
 .carrito a {
@@ -83,15 +86,16 @@ li {
 
 @keyframes girar {
   0% {
-      transform: rotate(-5deg);
+    transform: rotate(-5deg);
   }
   50% {
-      transform: rotate(5deg);
+    transform: rotate(5deg);
   }
   100% {
-      transform: rotate(-5deg);
+    transform: rotate(-5deg);
   }
 }
+/*************************************************************** navbar */
 
 
 /*************************************************************** card */
@@ -210,21 +214,15 @@ li {
 
 
 
-/******************************************** Register */
-.register-form {
+/******************************************** Login y Register */
+.register-form, .login-form {
   display: flex;
+  justify-content: space-evenly;
   flex-direction: column;
   gap: 20px;
   width: 60%;
+  height: 100%;
 
-  div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    label {flex: 1; text-align: start;}
-    input {flex: 1.5; height: 30px;}
-  }
   button {
     padding: 10px;
     border-radius: 5px;
@@ -235,13 +233,29 @@ li {
       background-color: #5555559a;
     }
   }
-  
 }
+  
+.register-content, .login-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-
-
-
-/******************************************** Register */
+  label {flex: 1; text-align: start; height: 50px; display: flex; align-items: center;}
+  input {flex: 1.5; height: 30px;}
+}
+.mensaje-error {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 5px;
+  pointer-events: none;
+  z-index: 999;
+}
+/******************************************** Login y Register */
 
 
 

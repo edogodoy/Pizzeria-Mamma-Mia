@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-const Register = ({ onSuccess }) => {
+const Login = ({ onSuccess }) => {
     const [formData, setFormData] = useState({
         email: '',
-        password: '',
-        confirmPassword: ''
+        password: ''
     });
     const [error, setError] = useState('');
 
@@ -16,27 +15,30 @@ const Register = ({ onSuccess }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const { password, confirmPassword } = formData;
+        const { email, password } = formData;
 
-        if (password.length < 6 || password.length > 12) {
-            setError('La contraseña debe tener entre 6 y 12 caracteres.');
+        if (password.length < 6) {
+            setError('La contraseña debe tener al menos 6 caracteres.');
             return;
         }
 
-        if (password !== confirmPassword) {
-            setError('Las contraseñas no coinciden.');
-            return;
-        }
+        // Supongamos que estos son los datos correctos para el login
+        const mockEmail = 'asd@asd';
+        const mockPassword = 'asdasd';
 
-        setError('');
-        onSuccess(); // Llama a la función pasada como prop para notificar el éxito
+        if (email === mockEmail && password === mockPassword) {
+            setError('');
+            onSuccess(); // Notificar éxito
+        } else {
+            setError('Email o contraseña incorrectos.');
+        }
     };
 
     return (
-        <form className='register-form' onSubmit={handleSubmit}>
-            <h2>Registro</h2>
+        <form className="login-form" onSubmit={handleSubmit}>
+            <h2>Iniciar Sesión</h2>
             <div>
-                <div className='register-content'>
+                <div className="login-content">
                     <label htmlFor="email">Email:</label>
                     <input
                         required
@@ -47,7 +49,7 @@ const Register = ({ onSuccess }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className='register-content'>
+                <div className="login-content">
                     <label htmlFor="password">Contraseña:</label>
                     <input
                         required
@@ -58,24 +60,12 @@ const Register = ({ onSuccess }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className='register-content'>
-                    <label htmlFor="confirmPassword">Confirmar Contraseña:</label>
-                    <input
-                        required
-                        type="password"
-                        id="confirmPassword"
-                        name="confirmPassword"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                    />
-                </div>
             </div>
-            <button type="submit">Registrar</button>
+            <button type="submit">Ingresar</button>
 
             {error && <p className='mensaje-error'>{error}</p>}
         </form>
     );
 };
 
-export default Register;
-
+export default Login;
