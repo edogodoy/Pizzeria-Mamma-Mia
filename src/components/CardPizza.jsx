@@ -1,11 +1,18 @@
 const CardPizza = ({ img, name, ingredients, price }) => {
     return (
         <div className="cardpizza">
-            <img src={img} alt={`Pizza ${name}`}/>
+            <img src={img} alt={`Pizza ${name}`} />
 
             <div className="cardpizza-content">
                 <h3>{name}</h3>
-                <p><strong>Ingredientes:</strong> {ingredients.join(', ')}</p>
+                <div className="cardpizza-ing">
+                    <p><strong>Ingredientes:</strong></p>
+                    <ul>
+                        {ingredients.map((ingredient, index) => (
+                            <li key={index}>{ingredient}</li>
+                        ))}
+                    </ul>
+                </div>
                 <p><strong>Precio:</strong> ${price}</p>
             </div>
             <div className="cardpizza-buttons">

@@ -99,12 +99,17 @@ li {
 
 
 /*************************************************************** card */
+.home {
+  display: grid;
+  place-items: center;
+
+}
 .cards {
-  display: flex;
-  align-items: center;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
-  justify-content: center;
+  padding: 20px;
+  max-width: 1000px;
 }
 
 
@@ -135,10 +140,15 @@ li {
   margin: 0;
   font-size: 24px;
 }
-
+.cardpizza-ing {
+  display: flex;
+  justify-content: center;
+  ul {
+    display: block;
+  }
+}
 .cardpizza-buttons {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -147,6 +157,7 @@ li {
   border: none;
   font-size: 16px;
   cursor: pointer;
+  width: 100%;
 }
 .btn-secondary {
   background-color: #0c0c0c;
@@ -165,9 +176,9 @@ li {
 
 
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
   .cards {
-      flex-direction: column;
+      grid-template-columns: 1fr;
       gap: 30px;
   }
 
@@ -199,6 +210,7 @@ li {
 .popup-content {
   background-color: #333;
   width: 90%;
+  max-width: 800px;
   height: 60vh;
   border-radius: 5px;
   display: flex;
@@ -243,9 +255,19 @@ li {
   label {flex: 1; text-align: start; height: 50px; display: flex; align-items: center;}
   input {flex: 1.5; height: 30px;}
 }
+@media (max-width: 768px) {
+  .register-content, .login-content {
+    flex-direction: column;
+    margin: 20px;
+    gap: 5px;
+    input {
+      width: 100%;
+    }
+  }
+}
 .mensaje-error {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   padding: 10px;
@@ -259,7 +281,70 @@ li {
 
 
 
+/******************************************** Cart */
+.cart {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
 
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.cart-item-img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cart-item-quantity button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+.btn-decrement:hover,
+.btn-increment:hover {
+  opacity: 0.8;
+}
+
+.cart-total {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.cart-total h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+/******************************************** Cart */
 
 
 
