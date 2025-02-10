@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Popup from './Popup';
-import Register from './Register';
-import Login from './Login';
+import Register from '../pages/Register';
+import Login from '../pages/Login';
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -38,11 +39,15 @@ const Navbar = () => {
             <nav>
                 <p>Pizzería Mamma Mia!</p>
                 <ul>
-                    <li><a href="../../index.html">🍕 Home</a></li>
-                    <li><a href="#" onClick={() => handleOpenPopup('login')}>🔐 Login</a></li>
-                    <li><a href="#" onClick={() => handleOpenPopup('register')}>🔐 Register</a></li>
-                    <li className="carrito"><a href="#">🛒</a></li>
+                    <li><Link to="/">🍕 Home</Link></li>
+                    <li><Link to="/register">Registrarse</Link></li>
+                    <li><Link to="/login">Iniciar Sesión</Link></li>
+                    <li><Link to="/profile">Perfil</Link></li>
+                    {/* <li><Link href="#" onClick={() => handleOpenPopup('login')}>🔐 Login</Link></li> */}
+                    {/* <li><Link href="#" onClick={() => handleOpenPopup('register')}>🔐 Register</Link></li> */}
+                    <li className="carrito"><Link to="/cart">🛒</Link></li>
                 </ul>
+                
             </nav>
 
             <Popup isOpen={isPopupOpen} onClose={handleClosePopup}>
