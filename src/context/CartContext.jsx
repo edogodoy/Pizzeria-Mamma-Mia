@@ -1,29 +1,27 @@
-import { createContext, useState } from "react";
-import { pizzaCart } from "../pizzas";
+import { createContext, useState, useContext } from "react";
+import { ApiContext } from "./ApiContext";
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(pizzaCart);
+  const { pizzas } = useContext(ApiContext);
+  const [cart, setCart] = useState([]);
 
   const handleIncrement = (id) => {
-    setCart(prevCart => {
-      // Buscar si el item ya existe en el carrito
-      const existingItem = prevCart.find(item => item.id === id);
-      
+    setCart((prevCart) => {
+      const existingItem = prevCart.find((item) => item.id === id);
+
       if (existingItem) {
-        // Si existe, incrementar su contador
-        return prevCart.map(item =>
+        return prevCart.map((item) =>
           item.id === id ? { ...item, count: item.count + 1 } : item
         );
       } else {
-        // Si no existe, agregar el nuevo item
-        const newItem = pizzaCart.find(item => item.id === id);
+        const newItem = pizzas.find((pizza) => pizza.id === id);
         if (newItem) {
           return [...prevCart, { ...newItem, count: 1 }];
         }
-        return prevCart;
       }
+      return prevCart;
     });
   };
 
@@ -32,7 +30,7 @@ const CartProvider = ({ children }) => {
       const updatedCart = prevCart.map((item) =>
         item.id === id ? { ...item, count: item.count - 1 } : item
       );
-      return updatedCart.filter(item => item.count > 0);
+      return updatedCart.filter((item) => item.count > 0);
     });
   };
 

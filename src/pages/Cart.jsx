@@ -1,24 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { ApiContext } from "../context/ApiContext";
+
 
 const Cart = () => {
   const { handleIncrement, handleDecrement, calculateTotal, cart } = useContext(CartContext);
-  const [pizzas, setPizzas] = useState([]);
-
-  // Función para obtener las pizzas desde la API
-  const fetchPizzas = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/pizzas");
-      const data = await response.json();
-      setPizzas(data);
-    } catch (error) {
-      console.error("Error al obtener las pizzas:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPizzas();
-  }, []);
+  const { pizzas } = useContext(ApiContext);
 
   // Combinar los datos del carrito con los de la API
   const cartWithDetails = cart.map((item) => {

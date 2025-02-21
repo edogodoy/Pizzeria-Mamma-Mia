@@ -13,11 +13,6 @@ import CartProvider from './context/CartContext'
 import ApiProvider from './context/ApiContext'
 
 
-
-
-
-
-
 const App = () => {
 
   return (
