@@ -10,7 +10,7 @@ import Login from './pages/Login'
 import Profile from './components/Profile'
 import NotFound from './components/NotFound'
 import CartProvider from './context/CartContext'
-
+import ApiProvider from './context/ApiContext'
 
 
 
@@ -21,6 +21,7 @@ import CartProvider from './context/CartContext'
 const App = () => {
 
   return (
+    <ApiProvider>
     <CartProvider>
       <BrowserRouter>
         <Navbar />
@@ -36,6 +37,7 @@ const App = () => {
       </BrowserRouter>
       <Footer />
     </CartProvider>
+    </ApiProvider>
   )
 }
 

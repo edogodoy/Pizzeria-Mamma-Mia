@@ -1,23 +1,32 @@
 import { createContext, useState } from "react";
 import { pizzaCart } from "../pizzas";
 
-// 1. Crear el contexto
 export const CartContext = createContext();
 
-// 2. Proveedor del contexto
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(pizzaCart);
 
-  // Maneja el incremento de la cantidad
   const handleIncrement = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, count: item.count + 1 } : item
-      )
-    );
+    setCart(prevCart => {
+      // Buscar si el item ya existe en el carrito
+      const existingItem = prevCart.find(item => item.id === id);
+      
+      if (existingItem) {
+        // Si existe, incrementar su contador
+        return prevCart.map(item =>
+          item.id === id ? { ...item, count: item.count + 1 } : item
+        );
+      } else {
+        // Si no existe, agregar el nuevo item
+        const newItem = pizzaCart.find(item => item.id === id);
+        if (newItem) {
+          return [...prevCart, { ...newItem, count: 1 }];
+        }
+        return prevCart;
+      }
+    });
   };
 
-  // Maneja el decremento de la cantidad
   const handleDecrement = (id) => {
     setCart((prevCart) => {
       const updatedCart = prevCart.map((item) =>
@@ -27,7 +36,6 @@ const CartProvider = ({ children }) => {
     });
   };
 
-  // Calcula el total
   const calculateTotal = () => {
     return cart.reduce((acc, item) => acc + item.price * item.count, 0);
   };
