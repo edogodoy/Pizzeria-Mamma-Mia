@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Popup from './Popup';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartContext";
+
 
 const Navbar = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [popupContent, setPopupContent] = useState('');
     const [isSuccess, setIsSuccess] = useState(false);
-    const [successType, setSuccessType] = useState(''); // Almacena el tipo de operación exitosa
+    const [successType, setSuccessType] = useState('');
+    const { calculateTotal } = useContext(CartContext);
+
 
     const handleOpenPopup = (content) => {
         setPopupContent(content);
@@ -45,7 +49,7 @@ const Navbar = () => {
                     <li><Link to="/profile">Perfil</Link></li>
                     {/* <li><Link href="#" onClick={() => handleOpenPopup('login')}>🔐 Login</Link></li> */}
                     {/* <li><Link href="#" onClick={() => handleOpenPopup('register')}>🔐 Register</Link></li> */}
-                    <li className="carrito"><Link to="/cart">🛒</Link></li>
+                    <li className="carrito"><Link to="/cart">🛒<span>${calculateTotal().toLocaleString("es-ES")}</span></Link></li>
                 </ul>
                 
             </nav>

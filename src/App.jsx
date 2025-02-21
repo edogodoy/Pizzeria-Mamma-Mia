@@ -9,6 +9,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Profile from './components/Profile'
 import NotFound from './components/NotFound'
+import CartProvider from './context/CartContext'
+
+
 
 
 
@@ -18,7 +21,7 @@ import NotFound from './components/NotFound'
 const App = () => {
 
   return (
-    <>
+    <CartProvider>
       <BrowserRouter>
         <Navbar />
         <Routes>
@@ -32,8 +35,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
       <Footer />
-
-    </>
+    </CartProvider>
   )
 }
 

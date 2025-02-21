@@ -1,4 +1,12 @@
-const CardPizza = ({ img, name, ingredients, price }) => {
+import React, { useContext } from "react";
+import { CartContext } from "../context/CartContext";
+
+
+const CardPizza = ({ id, img, name, ingredients, price }) => {
+
+    const { handleIncrement } = useContext(CartContext);
+
+
     return (
         <div className="cardpizza">
             <img src={img} alt={`Pizza ${name}`} />
@@ -19,7 +27,7 @@ const CardPizza = ({ img, name, ingredients, price }) => {
                 <button className="btn btn-secondary">
                     Ver Más <span role="img" aria-label="ver más">👀</span>
                 </button>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary" onClick={() => handleIncrement(id)}>
                     Añadir <span role="img" aria-label="carrito">🛒</span>
                 </button>
             </div>

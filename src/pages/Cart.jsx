@@ -1,34 +1,8 @@
-import React, { useState } from "react";
-import { pizzaCart } from "../pizzas"; // Importa los datos del carrito
+import React, { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const Cart = () => {
-  const [cart, setCart] = useState(pizzaCart); // Estado para el carrito
-
-  // Maneja el incremento de la cantidad
-  const handleIncrement = (id) => {
-    setCart(
-      cart.map((item) =>
-        item.id === id ? { ...item, count: item.count + 1 } : item
-      )
-    );
-  };
-
-  // Maneja el decremento de la cantidad
-  const handleDecrement = (id) => {
-    setCart((prevCart) => {
-      const updatedCart = prevCart.map((item) =>
-        item.id === id ? { ...item, count: item.count - 1 } : item
-      );
-
-      // Filtra los artículos con count <= 0
-      return updatedCart.filter(item => item.count > 0);
-    });
-  };
-
-  // Calcula el total
-  const calculateTotal = () => {
-    return cart.reduce((acc, item) => acc + item.price * item.count, 0);
-  };
+  const { handleIncrement, handleDecrement, calculateTotal, cart } = useContext(CartContext);
 
   return (
     <div className="cart">
