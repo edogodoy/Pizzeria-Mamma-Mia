@@ -1,10 +1,11 @@
+// Navbar.jsx
 import { useState, useContext } from 'react';
 import Popup from './Popup';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-
+import { UserContext } from '../context/UserContext'; // Importa UserContext
 
 const Navbar = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -12,7 +13,7 @@ const Navbar = () => {
     const [isSuccess, setIsSuccess] = useState(false);
     const [successType, setSuccessType] = useState('');
     const { calculateTotal } = useContext(CartContext);
-
+    const { token, logout } = useContext(UserContext); // Usa UserContext
 
     const handleOpenPopup = (content) => {
         setPopupContent(content);
@@ -44,14 +45,19 @@ const Navbar = () => {
                 <p>Pizzería Mamma Mia!</p>
                 <ul>
                     <li><Link to="/">🍕 Home</Link></li>
-                    <li><Link to="/register">Registrarse</Link></li>
-                    <li><Link to="/login">Iniciar Sesión</Link></li>
-                    <li><Link to="/profile">Perfil</Link></li>
-                    {/* <li><Link href="#" onClick={() => handleOpenPopup('login')}>🔐 Login</Link></li> */}
-                    {/* <li><Link href="#" onClick={() => handleOpenPopup('register')}>🔐 Register</Link></li> */}
+                    {!token ? ( // Mostrar enlaces según estado del token
+                        <>
+                            <li><Link to="/register">Registrarse</Link></li>
+                            <li><Link to="/login">Iniciar Sesión</Link></li>
+                        </>
+                    ) : (
+                        <>
+                            <li><Link to="/profile">Perfil</Link></li>
+                            <li><button onClick={logout}>Cerrar Sesión</button></li> {/* Botón de logout */}
+                        </>
+                    )}
                     <li className="carrito"><Link to="/cart">🛒<span>${calculateTotal().toLocaleString("es-ES")}</span></Link></li>
                 </ul>
-                
             </nav>
 
             <Popup isOpen={isPopupOpen} onClose={handleClosePopup}>

@@ -11,12 +11,14 @@ import Profile from './components/Profile'
 import NotFound from './components/NotFound'
 import CartProvider from './context/CartContext'
 import ApiProvider from './context/ApiContext'
+import { UserProvider } from './context/UserContext'
 
 
 const App = () => {
 
   return (
     <ApiProvider>
+    <UserProvider>
     <CartProvider>
       <BrowserRouter>
         <Navbar />
@@ -32,6 +34,7 @@ const App = () => {
       </BrowserRouter>
       <Footer />
     </CartProvider>
+    </UserProvider>
     </ApiProvider>
   )
 }
