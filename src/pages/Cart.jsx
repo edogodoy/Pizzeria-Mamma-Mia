@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import { ApiContext } from "../context/ApiContext";
-
+import { UserContext } from '../context/UserContext'; // Importa UserContext
 
 const Cart = () => {
   const { handleIncrement, handleDecrement, calculateTotal, cart } = useContext(CartContext);
   const { pizzas } = useContext(ApiContext);
+  const { token } = useContext(UserContext); // Obtiene el token del contexto
 
   // Combinar los datos del carrito con los de la API
   const cartWithDetails = cart.map((item) => {
@@ -34,7 +35,7 @@ const Cart = () => {
       </div>
       <div className="cart-total">
         <h3>Total: ${calculateTotal().toLocaleString("es-CL")}</h3>
-        <button className="btn-pay">Pagar</button>
+        <button className="btn-pay" disabled={!token}>Pagar</button> {/* Deshabilita el botón si token es false */}
       </div>
     </div>
   );
