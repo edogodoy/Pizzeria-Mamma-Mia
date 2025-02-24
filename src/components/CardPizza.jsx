@@ -23,7 +23,7 @@ const CardPizza = ({ id, img, name, ingredients, price }) => {
                 <p><strong>Precio:</strong> ${price}</p>
             </div>
             <div className="cardpizza-buttons">
-                <Link to={`/pizza/${id}`} className="btn btn-secondary">
+                <Link to={`/pizza/${id}/${name}`} className="btn btn-secondary">
                     Ver Más <span role="img" aria-label="ver más">👀</span>
                 </Link>
                 <button className="btn btn-primary" onClick={() => handleIncrement(id)}>
