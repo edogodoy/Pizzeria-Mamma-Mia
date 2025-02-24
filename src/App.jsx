@@ -1,17 +1,13 @@
 import './App.css'
 import Navbar from './components/Navbar'
-import Home from './pages/Home'
 import Footer from './components/Footer'
-import Cart from './pages/Cart'
-import Pizza from './pages/Pizza'
-import Register from './pages/Register'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Login from './pages/Login'
 import Profile from './components/Profile'
 import NotFound from './components/NotFound'
 import CartProvider from './context/CartContext'
 import ApiProvider from './context/ApiContext'
 import { UserProvider } from './context/UserContext'
+import { Cart, Home, Login, Pizza, Register } from './pages/index'
 
 
 const App = () => {

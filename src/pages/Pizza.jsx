@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 const Pizza = () => {
-    const { id, name } = useParams();
+    const { id } = useParams();
     const [pizza, setPizza] = useState(null);
 
     const apiPizza = async () => {
