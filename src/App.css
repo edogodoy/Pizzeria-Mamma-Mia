@@ -98,6 +98,10 @@ li {
     transform: rotate(-5deg);
   }
 }
+.active {
+  color: rgb(253, 255, 138);
+  text-decoration: none;
+}
 /*************************************************************** navbar */
 
 

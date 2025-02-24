@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import Popup from './Popup';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { UserContext } from '../context/UserContext'; // Importa UserContext
 
@@ -14,6 +14,7 @@ const Navbar = () => {
     const [successType, setSuccessType] = useState('');
     const { calculateTotal } = useContext(CartContext);
     const { token, logout } = useContext(UserContext); // Usa UserContext
+    const validateRoot = ({ isActive }) => isActive ? 'active' : ''
 
     const handleOpenPopup = (content) => {
         setPopupContent(content);
@@ -44,19 +45,19 @@ const Navbar = () => {
             <nav>
                 <p>Pizzería Mamma Mia!</p>
                 <ul>
-                    <li><Link to="/">🍕 Home</Link></li>
-                    {!token ? ( // Mostrar enlaces según estado del token
+                    <li><NavLink to="/" className={{validateRoot}}>🍕 Home</NavLink></li>
+                    {!token ? (
                         <>
-                            <li><Link to="/register">Registrarse</Link></li>
-                            <li><Link to="/login">Iniciar Sesión</Link></li>
+                            <li><NavLink to="/register" className={{validateRoot}}>Registrarse</NavLink></li>
+                            <li><NavLink to="/login" className={{validateRoot}}>Iniciar Sesión</NavLink></li>
                         </>
                     ) : (
                         <>
-                            <li><Link to="/profile">Perfil</Link></li>
-                            <li><button onClick={logout}>Cerrar Sesión</button></li> {/* Botón de logout */}
+                            <li><NavLink to="/profile" className={{validateRoot}}>Perfil</NavLink></li>
+                            <li><button onClick={logout}>Cerrar Sesión</button></li>
                         </>
                     )}
-                    <li className="carrito"><Link to="/cart">🛒<span>${calculateTotal().toLocaleString("es-ES")}</span></Link></li>
+                    <li className="carrito"><NavLink to="/cart" className={{validateRoot}}>🛒<span>${calculateTotal().toLocaleString("es-ES")}</span></NavLink></li>
                 </ul>
             </nav>
 
