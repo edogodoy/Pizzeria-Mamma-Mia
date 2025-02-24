@@ -1,21 +1,21 @@
-// context/UserContext.js
 import React, { createContext, useState } from 'react';
 
-// Crear el contexto
 export const UserContext = createContext();
 
-// Crear el proveedor del contexto
 export const UserProvider = ({ children }) => {
-    const [token, setToken] = useState(true); // Estado inicial del token
+  const [token, setToken] = useState(true);
+  const [user, setUser] = useState({
+    email: 'qwer@asdf.com',
+    password: 'hola1234'
+  });
 
-    // Método para cerrar sesión
-    const logout = () => {
-        setToken(false);
-    };
+  const logout = () => {
+    setToken(false);
+  };
 
-    return (
-        <UserContext.Provider value={{ token, logout }}>
-            {children}
-        </UserContext.Provider>
-    );
+  return (
+    <UserContext.Provider value={{ token, logout, user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
 };
