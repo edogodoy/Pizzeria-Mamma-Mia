@@ -5,7 +5,7 @@ import Register from '../pages/Register';
 import Login from '../pages/Login';
 import { NavLink } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
-import { UserContext } from '../context/UserContext'; // Importa UserContext
+import { UserContext } from '../context/UserContext';
 
 const Navbar = () => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);

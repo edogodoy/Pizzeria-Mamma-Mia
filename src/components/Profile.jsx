@@ -1,58 +1,67 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
 const Profile = () => {
-  const [user, setUser] = useState(null)
+  const { token, email, profile, getProfile, loading, logout } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token')
-
-      if (token) {
-        try {
-          const response = await axios.get("http://localhost:5000/api/auth/me", {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          console.log('Api Response: ', response.data)
-          setUser(response.data)
-        } catch (error) {
-          console.log(error)
-        }
-      }
+    // Si no hay token, redirigir al login
+    if (!token) {
+      navigate('/login');
+      return;
     }
-    fetchUser()
-  }, [])
+    
+    // Cargar el perfil solo una vez al montar el componente
+    getProfile();
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token, navigate]); // Eliminamos getProfile de las dependencias
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
+
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
 
   return (
     <div>
-      {user
-        ? (
+      {(profile || email) ? (
+        <div>
+          <div>
+            <h3>Perfil de Usuario</h3>
+          </div>
           <div>
             <div>
-              <h3>Perfil de Usuario</h3>
+              <img
+                src='https://www.shutterstock.com/image-illustration/david-street-style-graphic-designtextile-600nw-2265632523.jpg'
+                alt='User Avatar'
+              />
+              <h5><strong>Email:</strong></h5>
+              <p>{profile?.email || email}</p>
+              
+              {/* Botón para cerrar sesión */}
+              <button 
+                onClick={handleLogout}
+                className="logout-button"
+              >
+                Cerrar Sesión
+              </button>
             </div>
-            <div>
-              <div>
-                <img
-                  src='https://www.shutterstock.com/image-illustration/david-street-style-graphic-designtextile-600nw-2265632523.jpg'
-                  alt='User Avatar'
-                />
-                <h5><strong>Email:</strong></h5>
-                <p>{user.email}</p>
-              </div>
-              <hr />
-            </div>
+            <hr />
           </div>
-          )
-        : (
-          <div>
-            <p><strong>Por favor, inicia sesión para ver tu perfil.</strong></p>
-          </div>
-          )}
+        </div>
+      ) : (
+        <div>
+          <p><strong>Por favor, inicia sesión para ver tu perfil.</strong></p>
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

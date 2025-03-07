@@ -1,11 +1,16 @@
-import React, { useState } from 'react';
-import axios from 'axios'
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
 
-const Login = () => {
+
+const Login = ({ onSuccess }) => {
+    const { login, loading } = useContext(UserContext);
+    const navigate = useNavigate();
+    
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
 
-    const handleChange = async (e) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
@@ -13,35 +18,34 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
-
         if (!formData.email || !formData.password) {
-            setError('Por favor, completa todos los campos.')
-            return
+            setError('Por favor, completa todos los campos.');
+            return;
         }
 
-        setError('')
-        await auth(formData.email, formData.password)
-    };
+        if (formData.password.length < 6) {
+            setError('La contraseña debe tener al menos 6 caracteres.');
+            return;
+        }
 
-    const auth = async (userEmail, password) => {
+        setError('');
+        
         try {
-            const URL = "http://localhost:5000/api/auth/login"
-            const payload = { email: userEmail, password }
+            const result = await login(formData.email, formData.password);
             
-            const user = await axios.post(URL, payload)
-            console.log(user)
-            localStorage.setItem('token', user.data.token)
-            console.log('User: ', user.data)
-    
-        } catch (error) {
-            if (password.length < 6) {
-                setError('La contraseña debe tener al menos 6 caracteres.');
-                return;
+            if (result.success) {
+                if (onSuccess) {
+                    onSuccess(); // Llama a la función pasada como prop para notificar el éxito
+                } else {
+                    navigate('/profile');
+                }
+            } else {
+                setError(result.error?.message || 'Credenciales inválidas');
             }
-            console.log(error)
+        } catch (err) {
+            setError('Error al iniciar sesión. Por favor, intenta de nuevo.');
         }
-    }
+    };
 
     return (
         <div className='login-cent'>
@@ -71,7 +75,9 @@ const Login = () => {
                         />
                     </div>
                 </div>
-                <button type="submit">Ingresar</button>
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Procesando...' : 'Ingresar'}
+                </button>
 
                 {error && <p className='mensaje-error'>{error}</p>}
             </form>
