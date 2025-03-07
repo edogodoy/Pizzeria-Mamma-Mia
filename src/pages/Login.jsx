@@ -1,38 +1,47 @@
 import React, { useState } from 'react';
+import axios from 'axios'
 
-const Login = ({ onSuccess }) => {
-    const [formData, setFormData] = useState({
-        email: '',
-        password: ''
-    });
+const Login = () => {
+    const [formData, setFormData] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
 
-    const handleChange = (e) => {
+    const handleChange = async (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { email, password } = formData;
 
-        if (password.length < 6) {
-            setError('La contraseña debe tener al menos 6 caracteres.');
-            return;
+
+        if (!formData.email || !formData.password) {
+            setError('Por favor, completa todos los campos.')
+            return
         }
 
-        // Supongamos que estos son los datos correctos para el login
-        const mockEmail = 'asd@asd';
-        const mockPassword = 'asdasd';
-
-        if (email === mockEmail && password === mockPassword) {
-            setError('');
-            onSuccess(); // Notificar éxito
-        } else {
-            setError('Email o contraseña incorrectos.');
-        }
+        setError('')
+        await auth(formData.email, formData.password)
     };
+
+    const auth = async (userEmail, password) => {
+        try {
+            const URL = "http://localhost:5000/api/auth/login"
+            const payload = { email: userEmail, password }
+            
+            const user = await axios.post(URL, payload)
+            console.log(user)
+            localStorage.setItem('token', user.data.token)
+            console.log('User: ', user.data)
+    
+        } catch (error) {
+            if (password.length < 6) {
+                setError('La contraseña debe tener al menos 6 caracteres.');
+                return;
+            }
+            console.log(error)
+        }
+    }
 
     return (
         <div className='login-cent'>
